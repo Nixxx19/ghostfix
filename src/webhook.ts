@@ -46,7 +46,8 @@ export async function handleWebhook(req: Request, res: Response): Promise<void> 
       }
 
       // Respond immediately, process in background
-      res.status(202).json({ message: "Processing issue" });
+      const timestamp = new Date().toISOString();
+      res.status(202).json({ message: "Processing issue", timestamp });
 
       try {
         const octokit = await getInstallationOctokit(installationId);
@@ -69,5 +70,6 @@ export async function handleWebhook(req: Request, res: Response): Promise<void> 
     }
   }
 
-  res.status(200).json({ message: "OK" });
+  const timestamp = new Date().toISOString();
+  res.status(200).json({ message: "OK", timestamp });
 }
