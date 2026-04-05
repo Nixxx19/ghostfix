@@ -10,17 +10,8 @@ It won't replace you on hard architectural problems. But for straightforward bug
 
 ## How it works
 
-```mermaid
-graph TD
-    A[Issue created] --> B{Labeled ai-fix}
-    B -- No --> C[Nothing happens]
-    B -- Yes --> D[Fetch repo code]
-    D --> E[Send to AI for analysis]
-    E --> F[Generate fix]
-    F --> G[Create branch and commit]
-    G --> H[Open pull request]
-    H --> I[Comment on issue with PR link]
-```
+<img width="442" height="703" alt="Screenshot 2026-04-05 at 8 36 50 PM" src="https://github.com/user-attachments/assets/ef54ecf3-0304-40bb-ad28-3986d168961a" />
+
 
 1. Someone opens an issue and adds the `ai-fix` label (or you add it later)
 2. GitHub fires a webhook to your Ghostfix instance
@@ -106,11 +97,3 @@ Install the app on a repo, open an issue, slap the `ai-fix` label on it, and wat
 | `PORT` | No | Server port (default: `3000`) |
 
 Plus one AI provider key (see table above).
-
-## Limitations
-
-- Works best on small-to-medium repos. Very large codebases may hit token limits.
-- The fix quality depends on the AI model and how well the issue is described.
-- It reads up to 40 source files. If the relevant code is buried deep, it might miss context.
-- Always review the PR before merging. Always.
-
