@@ -2,13 +2,13 @@
 
 A GitHub App that reads your issues, looks at your code, and opens a PR with a fix. You label an issue, it does the rest.
 
-## Why?
+## The problem
 
 Most issues sit around waiting for someone to context-switch, read through the codebase, figure out what's wrong, and push a fix. That loop is slow. Ghostfix shortens it - label an issue `ai-fix`, and it picks it up, reads the relevant code, generates a patch, and opens a pull request. You still review and merge. It just removes the grunt work.
 
 It won't replace you on hard architectural problems. But for straightforward bugs, typos, missing error handling, small feature asks - it gets surprisingly close.
 
-## How it works
+## Under the hood
 
 <img width="442" height="703" alt="Screenshot 2026-04-05 at 8 36 50 PM" src="https://github.com/user-attachments/assets/ef54ecf3-0304-40bb-ad28-3986d168961a" />
 
@@ -20,7 +20,7 @@ It won't replace you on hard architectural problems. But for straightforward bug
 5. Parses the response, commits the changes to a new branch
 6. Opens a PR that references and closes the original issue
 
-## Supported AI providers
+## Pick your AI
 
 Use whichever you already have an API key for. Ghostfix picks the first one it finds:
 
@@ -33,7 +33,7 @@ Use whichever you already have an API key for. Ghostfix picks the first one it f
 | Groq | `GROQ_API_KEY` | llama-3.3-70b-versatile |
 | Together | `TOGETHER_API_KEY` | Llama-3.3-70B-Instruct-Turbo |
 
-## Setup
+## Getting started
 
 ### 1. Create a GitHub App
 
@@ -86,7 +86,7 @@ Copy the ngrok URL into your GitHub App's webhook settings.
 
 Install the app on a repo, open an issue, slap the `ai-fix` label on it, and watch.
 
-## Configuration
+## Environment variables
 
 | Variable | Required | Description |
 |----------|----------|-------------|
