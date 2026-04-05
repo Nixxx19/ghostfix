@@ -12,12 +12,12 @@ It won't replace you on hard architectural problems. But for straightforward bug
 
 ```mermaid
 graph LR
-    A[Issue created] --> B{Labeled ai-fix?}
+    A[Issue created] --> B{Labeled ai-fix}
     B -- No --> C[Nothing happens]
     B -- Yes --> D[Fetch repo code]
     D --> E[Send to AI for analysis]
     E --> F[Generate fix]
-    F --> G[Create branch + commit]
+    F --> G[Create branch and commit]
     G --> H[Open pull request]
     H --> I[Comment on issue with PR link]
 ```
@@ -114,6 +114,3 @@ Plus one AI provider key (see table above).
 - It reads up to 40 source files. If the relevant code is buried deep, it might miss context.
 - Always review the PR before merging. Always.
 
-## License
-
-MIT
