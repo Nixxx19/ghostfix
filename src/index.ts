@@ -16,7 +16,7 @@ app.use(
 // Health check
 app.get("/", (_req, res) => {
   res.json({
-    name: "GitHub Issue Fixer Bot",
+    name: "Ghostfix",
     status: "running",
     triggerLabel: config.triggerLabel,
   });
@@ -26,7 +26,7 @@ app.get("/", (_req, res) => {
 app.post("/webhook", handleWebhook);
 
 app.listen(config.port, () => {
-  console.log(`🤖 Issue Fixer Bot running on port ${config.port}`);
+  console.log(`👻 Ghostfix running on port ${config.port}`);
   console.log(`   Trigger label: "${config.triggerLabel}"`);
   console.log(`   Webhook URL: http://localhost:${config.port}/webhook`);
 });

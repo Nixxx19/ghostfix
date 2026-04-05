@@ -1,7 +1,7 @@
 {
-  "name": "github-issue-fixer",
+  "name": "ghostfix",
   "version": "1.0.0",
-  "description": "AI-powered GitHub App that automatically fixes issues by reading code, generating fixes, and opening PRs",
+  "description": "Ghostfix -AI-powered GitHub App that automatically fixes issues by analyzing code and opening PRs",
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
