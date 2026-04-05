@@ -25,12 +25,12 @@ It won't replace you on hard architectural problems. But for straightforward bug
 An issue gets labeled `ai-fix`, Ghostfix picks it up, analyzes the code, and comments on the issue while it works:
 
 <!-- Screenshot 1: Issue page showing the ai-fix label and bot comments -->
-![Issue with bot comments](screenshots/issue-demo.png)
+<img width="1044" height="727" alt="Screenshot 2026-04-05 at 9 17 37 PM" src="https://github.com/user-attachments/assets/d1293615-2642-42e9-ad00-af8fb53f82dd" />
 
 A few seconds later, a pull request appears with the fix:
 
 <!-- Screenshot 2: The PR that Ghostfix opened -->
-![PR created by Ghostfix](screenshots/pr-demo.png)
+<img width="910" height="741" alt="Screenshot 2026-04-05 at 9 18 35 PM" src="https://github.com/user-attachments/assets/496ace52-cf8a-49ad-9ba3-d03f6d6f13ce" />
 
 ## Pick your AI
 
