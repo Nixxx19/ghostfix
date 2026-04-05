@@ -45,7 +45,7 @@ class GeminiProvider implements AIProvider {
       }),
     });
 
-    const data = await res.json();
+    const data: any = await res.json();
     return data.candidates?.[0]?.content?.parts?.[0]?.text ?? "";
   }
 }
@@ -78,7 +78,7 @@ class OpenRouterProvider implements AIProvider {
       }
     );
 
-    const data = await res.json();
+    const data: any = await res.json();
     return data.choices?.[0]?.message?.content ?? "";
   }
 }
@@ -110,7 +110,7 @@ class OpenAICompatibleProvider implements AIProvider {
       }),
     });
 
-    const data = await res.json();
+    const data: any = await res.json();
     return data.choices?.[0]?.message?.content ?? "";
   }
 }

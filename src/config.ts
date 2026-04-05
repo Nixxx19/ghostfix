@@ -21,9 +21,6 @@ export const config = {
     ),
     webhookSecret: requireEnv("GITHUB_WEBHOOK_SECRET"),
   },
-  anthropic: {
-    apiKey: requireEnv("ANTHROPIC_API_KEY"),
-  },
   port: parseInt(process.env.PORT || "3000", 10),
   triggerLabel: process.env.TRIGGER_LABEL || "ai-fix",
 };
