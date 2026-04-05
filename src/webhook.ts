@@ -17,6 +17,34 @@ function verifySignature(payload: string, signature: string): boolean {
   );
 }
 
+function isBotMentioned(text: string): boolean {
+  const mention = `@${config.botName}`;
+  return text.toLowerCase().includes(mention.toLowerCase());
+}
+
+async function processIssue(
+  installationId: number,
+  repo: { owner: { login: string }; name: string },
+  issue: { number: number; title: string; body?: string }
+): Promise<void> {
+  try {
+    const octokit = await getInstallationOctokit(installationId);
+    const ai = createProvider();
+
+    await fixIssue(
+      octokit,
+      ai,
+      repo.owner.login,
+      repo.name,
+      issue.number,
+      issue.title,
+      issue.body || ""
+    );
+  } catch (err) {
+    console.error(`[webhook] Error processing issue #${issue.number}:`, err);
+  }
+}
+
 export async function handleWebhook(req: Request, res: Response): Promise<void> {
   const signature = req.headers["x-hub-signature-256"] as string;
   const event = req.headers["x-github-event"] as string;
@@ -29,42 +57,40 @@ export async function handleWebhook(req: Request, res: Response): Promise<void> 
   }
 
   const payload = req.body;
+  const installationId = payload.installation?.id;
 
-  // We only care about issues being labeled
+  if (!installationId) {
+    res.status(200).json({ message: "OK" });
+    return;
+  }
+
+  // Trigger 1: Issue labeled with ai-fix
   if (event === "issues" && payload.action === "labeled") {
     const label = payload.label?.name;
 
     if (label === config.triggerLabel) {
-      const issue = payload.issue;
-      const repo = payload.repository;
-      const installationId = payload.installation?.id;
+      res.status(202).json({ message: "Processing issue" });
+      processIssue(installationId, payload.repository, payload.issue);
+      return;
+    }
+  }
 
-      if (!installationId) {
-        console.error("[webhook] No installation ID in payload");
-        res.status(400).json({ error: "Missing installation ID" });
+  // Trigger 2: @ghostfix-bot mentioned in an issue comment
+  if (event === "issue_comment" && payload.action === "created") {
+    const comment = payload.comment?.body || "";
+
+    if (isBotMentioned(comment)) {
+      const issue = payload.issue;
+
+      // Don't respond to our own comments
+      if (payload.comment?.performed_via_github_app?.id?.toString() === config.github.appId) {
+        res.status(200).json({ message: "Ignoring own comment" });
         return;
       }
 
-      // Respond immediately, process in background
-      res.status(202).json({ message: "Processing issue" });
-
-      try {
-        const octokit = await getInstallationOctokit(installationId);
-        const ai = createProvider();
-
-        await fixIssue(
-          octokit,
-          ai,
-          repo.owner.login,
-          repo.name,
-          issue.number,
-          issue.title,
-          issue.body || ""
-        );
-      } catch (err) {
-        console.error(`[webhook] Error processing issue #${issue.number}:`, err);
-      }
-
+      console.log(`[webhook] Bot mentioned in issue #${issue.number}`);
+      res.status(202).json({ message: "Processing mention" });
+      processIssue(installationId, payload.repository, issue);
       return;
     }
   }

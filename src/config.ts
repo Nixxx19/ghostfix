@@ -23,4 +23,5 @@ export const config = {
   },
   port: parseInt(process.env.PORT || "3000", 10),
   triggerLabel: process.env.TRIGGER_LABEL || "ai-fix",
+  botName: process.env.BOT_NAME || "ghostfix-bot",
 };

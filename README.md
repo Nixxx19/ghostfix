@@ -20,6 +20,18 @@ It won't replace you on hard architectural problems. But for straightforward bug
 5. Parses the response, commits the changes to a new branch
 6. Opens a PR that references and closes the original issue
 
+## Demo
+
+An issue gets labeled `ai-fix`, Ghostfix picks it up, analyzes the code, and comments on the issue while it works:
+
+<!-- Screenshot 1: Issue page showing the ai-fix label and bot comments -->
+![Issue with bot comments](screenshots/issue-demo.png)
+
+A few seconds later, a pull request appears with the fix:
+
+<!-- Screenshot 2: The PR that Ghostfix opened -->
+![PR created by Ghostfix](screenshots/pr-demo.png)
+
 ## Pick your AI
 
 Use whichever you already have an API key for. Ghostfix picks the first one it finds:
