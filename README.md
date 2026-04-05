@@ -11,7 +11,7 @@ It won't replace you on hard architectural problems. But for straightforward bug
 ## How it works
 
 ```mermaid
-graph LR
+graph TD
     A[Issue created] --> B{Labeled ai-fix}
     B -- No --> C[Nothing happens]
     B -- Yes --> D[Fetch repo code]
