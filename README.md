@@ -13,12 +13,19 @@ It won't replace you on hard architectural problems. But for straightforward bug
 <img width="442" height="703" alt="Screenshot 2026-04-05 at 8 36 50 PM" src="https://github.com/user-attachments/assets/ef54ecf3-0304-40bb-ad28-3986d168961a" />
 
 
-1. Someone opens an issue and adds the `ai-fix` label (or you add it later)
-2. GitHub fires a webhook to your Ghostfix instance
-3. Ghostfix pulls the repo tree, grabs relevant source files
-4. Sends everything to an AI provider with the issue context
-5. Parses the response, commits the changes to a new branch
-6. Opens a PR that references and closes the original issue
+There are two ways to trigger Ghostfix:
+
+- **Label an issue** with `ai-fix`
+- **Mention the bot** by commenting `@ghostfix-bot` on any issue
+
+Once triggered:
+
+1. Ghostfix picks up the issue via webhook
+2. Pulls the repo tree and grabs relevant source files
+3. Sends everything to an AI provider with the issue context
+4. Parses the response, commits the changes to a new branch
+5. Opens a PR that references and closes the original issue
+6. Comments on the issue with a link to the PR
 
 ## Demo
 
@@ -55,7 +62,7 @@ Go to [github.com/settings/apps/new](https://github.com/settings/apps/new) and c
 - **Webhook secret**: Generate something random, save it for `.env`
 - **Permissions**:
   - Repository: Contents (Read & Write), Issues (Read & Write), Pull requests (Read & Write)
-- **Events**: Subscribe to `Issues`
+- **Events**: Subscribe to `Issues` and `Issue comment`
 
 Download the private key after creating the app.
 
