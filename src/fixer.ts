@@ -85,12 +85,40 @@ Important:
 }
 
 function parseAIResponse(response: string): FileChange[] {
-  // Extract JSON from the response (might be wrapped in markdown code blocks)
-  const jsonMatch = response.match(/```(?:json)?\s*([\s\S]*?)```/) || [
-    null,
-    response,
-  ];
-  const jsonStr = jsonMatch[1]!.trim();
+  console.log("[fixer] Raw AI response length:", response.length);
+  console.log("[fixer] Raw AI response (first 500 chars):", response.slice(0, 500));
+
+  // Try multiple extraction strategies
+  let jsonStr = "";
+
+  // Strategy 1: Extract from ```json ... ``` blocks
+  const jsonBlockMatch = response.match(/```json\s*([\s\S]*?)```/);
+  if (jsonBlockMatch) {
+    jsonStr = jsonBlockMatch[1].trim();
+  }
+
+  // Strategy 2: Extract from ``` ... ``` blocks
+  if (!jsonStr) {
+    const codeBlockMatch = response.match(/```\s*([\s\S]*?)```/);
+    if (codeBlockMatch) {
+      jsonStr = codeBlockMatch[1].trim();
+    }
+  }
+
+  // Strategy 3: Find JSON array directly in the response
+  if (!jsonStr) {
+    const arrayMatch = response.match(/\[[\s\S]*\]/);
+    if (arrayMatch) {
+      jsonStr = arrayMatch[0].trim();
+    }
+  }
+
+  // Strategy 4: Use the whole response
+  if (!jsonStr) {
+    jsonStr = response.trim();
+  }
+
+  console.log("[fixer] Extracted JSON (first 300 chars):", jsonStr.slice(0, 300));
 
   const parsed = JSON.parse(jsonStr);
 

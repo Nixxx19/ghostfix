@@ -58,7 +58,7 @@ class OpenRouterProvider implements AIProvider {
 
   constructor(apiKey: string, model?: string) {
     this.apiKey = apiKey;
-    this.model = model || "anthropic/claude-sonnet-4";
+    this.model = model || "google/gemini-2.0-flash-001";
   }
 
   async analyzeAndFix(prompt: string): Promise<string> {
